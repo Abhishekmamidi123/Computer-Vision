@@ -36,7 +36,7 @@ def find_similarity(image_sift_feature, visual_words_centroids):
 	distances = []
 	for feature in visual_words_centroids:
 		d = distance.euclidean(feature, image_sift_feature)
-		distance.append(d)
+		distances.append(d)
 	index = distances.index(min(distances))
 	return index
 
@@ -57,10 +57,10 @@ def visual_words_representation_of_images(All_sift_features, number_of_features_
 	return images
 
 def read_labels(path):
-	csvfile = open(path, 'rb')
-	csvfile = csv.reader(csvfile)
-	for x in csvfile:
-		return map(int, x.split(','))
+	with open(path,'rU') as csvfile:
+		csvfile = csv.reader(csvfile, delimiter=',')
+		csvdata = list(csvfile)
+		return map(int, csvdata[0])
 
 def kNN_classifer(train_images, train_labels, k_NN):
 	knn = KNeighborsClassifier(n_neighbors = k_NN)
@@ -103,7 +103,7 @@ kNN_model = kNN_classifer(train_images, train_labels, k_NN)
 
 # Testing
 test_images = visual_words_representation_of_images(test_sift_features, number_of_features_in_each_test_image, visual_words_centroids, k_clusters)
-test_prediction = knn.predict(test_images)
+test_prediction = kNN_model.predict(test_images)
 test_labels_path = '../../data/test_labels.csv'
 test_labels = read_labels(test_labels_path)
 
