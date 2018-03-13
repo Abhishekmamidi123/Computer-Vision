@@ -87,7 +87,7 @@ test_sift_features, number_of_features_in_each_test_image = read_sift_descriptor
 print len(number_of_features_in_each_test_image)
 
 # Use K-means to compute visual words # Cluster descriptors
-k_clusters = 3
+k_clusters = 4
 visual_words_centroids, labels = compute_visual_words_k_means(train_sift_features, test_sift_features, k_clusters)
 print visual_words_centroids
 
@@ -112,3 +112,7 @@ display_confusion_matrix(test_labels, test_prediction)
 
 # Categorization Accuracy
 display_categorization_accuracy(test_labels, test_prediction)
+
+
+# Accuracy: 31.3 - k=3c,5nn
+
