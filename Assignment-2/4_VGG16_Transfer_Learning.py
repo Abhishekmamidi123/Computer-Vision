@@ -1,4 +1,5 @@
 import cv2
+import csv
 import numpy as np
 import tensorflow as tf
 import scipy
@@ -19,11 +20,17 @@ def read_images(images_path, number_of_images):
 		path = images_path + '/' + str(i) + '.jpg'
 		image = scipy.misc.imread(path)
 		images.append(image)
-		print np.array(images).shape
+	images = np.array(images)
+	print images.shape
+	return images
 
-#def read_labels(train_labels_path):
-	
-	
+def read_labels(labels_path):
+	with open(labels_path,'rU') as csvfile:
+		csvfile = csv.reader(csvfile, delimiter=',')
+		csvdata = list(csvfile)
+		labels = map(int, csvdata[0])
+		labels_tensor = tf.reshape(tf.constant(labels), [1, 1, 1, len(labels)])
+		return labels_tensor
 
 def conv2d(path, previous_layer, layer_no):
 	W = np.load(path + '/' + layers[layer_no + 1] + '.npy')
@@ -93,13 +100,14 @@ image_height = 256
 image_width = 256
 channels = 3
 path = '../../pretrained_models/vgg16_pretrained_weights'
-model = generate_model(path, image_height, image_width, channels)
+# model = generate_model(path, image_height, image_width, channels)
 
-train_images_path = '../../data/train'
-train_images = read_images(train_images_path, 1888)
+# train_images_path = '../../data/train'
+# train_images = read_images(train_images_path, 1888)
 train_labels_path = '../../data/test_labels.csv'
 train_labels = read_labels(train_labels_path)
-train_model(model, train_images, train_labels)
+print train_labels
+# train_model(model, train_images, train_labels)
 
 # test_images_path = '../../data/test'
 # test_images = read_images(test_images_path, 800)
