@@ -85,11 +85,9 @@ def generate_model(path, image_height, image_width, channels):
 		if cnt%2==0:
 			print str(layer_name[:-2]) + '  :' + str(model[layer_name[:-2]].shape)
 		cnt+=1
-	
-	print '\n'
 	return model
 
-def train_model(model):
+def train_model(model, train_images, train_labels):
 	sess = tf.InteractiveSession()
 	sess.run(tf.global_variables_initializer())
 	
@@ -107,10 +105,11 @@ path = '../../pretrained_models/vgg16_pretrained_weights'
 train_labels_path = '../../data/test_labels.csv'
 train_labels = read_labels(train_labels_path)
 print train_labels
-# train_model(model, train_images, train_labels)
+# sess = train_model(model, train_images, train_labels)
 
 # test_images_path = '../../data/test'
 # test_images = read_images(test_images_path, 800)
+# test_predictions = test_predict(sess, test_images)
 # test_labels_path = '../../data/test_labels.csv'
 # labels = read_labels(test_labels_path)
-
+# Accuracy = compute_accuracy(test_predictions, labels)
