@@ -87,6 +87,8 @@ def generate_model(path, image_height, image_width, channels):
 		cnt+=1
 	return model
 
+
+
 def train_model(model, train_images, train_labels):
 	sess = tf.InteractiveSession()
 	sess.run(tf.global_variables_initializer())
@@ -98,7 +100,7 @@ image_height = 256
 image_width = 256
 channels = 3
 path = '../../pretrained_models/vgg16_pretrained_weights'
-# model = generate_model(path, image_height, image_width, channels)
+model = generate_model(path, image_height, image_width, channels)
 
 # train_images_path = '../../data/train'
 # train_images = read_images(train_images_path, 1888)
@@ -113,3 +115,6 @@ print train_labels
 # test_labels_path = '../../data/test_labels.csv'
 # labels = read_labels(test_labels_path)
 # Accuracy = compute_accuracy(test_predictions, labels)
+
+# 150 kmeans - kNN 9 --> 54.85
+# 
