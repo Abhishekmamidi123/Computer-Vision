@@ -112,7 +112,3 @@ display_confusion_matrix(test_labels, test_prediction)
 
 # Categorization Accuracy
 display_categorization_accuracy(test_labels, test_prediction)
-
-
-# Accuracy: 31.3 - k=3c,5nn
-
