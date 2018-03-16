@@ -63,7 +63,7 @@ num_classes = 9
 print image_input
 print 'Abhishek'
 # require_flatten = True
-																																					 input_shape=(229, 229, 3))
+input_shape=((229, 229, 3))
 print 'Abhishek12'
 # model.summary()																																			
 last_layer = model.get_layer('avg_pool').output
