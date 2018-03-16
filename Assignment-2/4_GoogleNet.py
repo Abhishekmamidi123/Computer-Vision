@@ -13,7 +13,7 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import imshow
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
-from resnet50 import ResNet50
+from inception_v3 import InceptionV3
 from keras.layers import Input
 from keras.models import Model
 from keras.layers import GlobalAveragePooling2D, Dense, Dropout,Activation,Flatten
@@ -26,6 +26,7 @@ def read_images(images_path, number_of_images):
 	for i in range(1, number_of_images + 1):
 		path = images_path + '/' + str(i) + '.jpg'
 		image = scipy.misc.imread(path)
+		image = scipy.misc.imresize(image, [229, 229, 3])
 		images.append(image)
 	images = np.array(images)
 	print images.shape
@@ -57,33 +58,35 @@ test_labels = read_labels(test_labels_path)
 print len(test_labels)
 
 
-image_input = Input(shape=(256, 256, 3))
+image_input = Input(shape=(229, 229, 3))
 num_classes = 9
-model = ResNet50(input_tensor = image_input, include_top = True, weights='imagenet')
-# model.summary()
+print image_input
+print 'Abhishek'
+# require_flatten = True
+																																					 input_shape=(229, 229, 3))
+print 'Abhishek12'
+# model.summary()																																			
 last_layer = model.get_layer('avg_pool').output
-x = Flatten(name='flatten')(last_layer)
-out = Dense(num_classes, activation='softmax', name='output_layer')(x)
+# x = Flatten(name='flatten')(last_layer)
+x = last_layer
+out = Dense(num_classes, activation='so																																																																									ftmax', name='output_layer')(x)
 custom_resnet_model = Model(inputs=image_input,outputs= out)
-# custom_resnet_model.summary()
+custom_resnet_model.summary()
 
 for layer in custom_resnet_model.layers[:-1]:
 	layer.trainable = False
 
-custom_resnet_model.layers[-1].trainable
+custom_resnet_model.layers[-1].trainable=True
 custom_resnet_model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
 
 train_labels = to_categorical(train_labels)
 print train_labels.shape
 test_labels = to_categorical(test_labels)
 t=time.time()
+print train_images.shape
 hist = custom_resnet_model.fit(train_images, train_labels, batch_size=32, epochs=12, verbose=1, validation_data=(test_images, test_labels))
 
 print('Training time: %s' % (t - time.time()))
 (loss, accuracy) = custom_resnet_model.evaluate(test_images, test_labels, batch_size=10, verbose=1)
 print loss
 print accuracy
-
-# Accuracy: 99.47%
-# Loss: 0.944568736479
-# Accuracy: 0.726249999925
