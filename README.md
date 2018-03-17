@@ -11,3 +11,6 @@
 - Transfer Learning using ResNet50 pretrained weights on ImageNet.
 - Transfer Learning using VGG16 pretrained weights on ImageNet.
 - Transfer Learning using GoogleNet pretrained weights on ImageNet.
+
+### Contributors
+[M R Abhishek](https://github.com/Abhishekmamidi123) and [K Vagdevi](https://github.com/vagdevik)
