@@ -62,3 +62,11 @@ print vanishing_points
 # Plot the vanishing points
 plt.plot([vanishing_points[0][0], vanishing_points[1][0]], [vanishing_points[0][1], vanishing_points[1][1]], marker = 'o')
 plt.show()
+
+# Find Equation
+m = slope(vanishing_points[0], vanishing_points[1])
+c = y_intercept(vanishing_points[0], m)
+print '\n'
+print 'Equation:'
+equation = 'y = ' + str(m) + '*x + ' + str(c)
+print equation
