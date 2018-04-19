@@ -9,12 +9,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from random import randrange
 
-
-img = cv2.imread('/home/vubuntu/Desktop/uttower_left.JPG')
-img2 = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-
-img_ = cv2.imread('/home/vubuntu/Desktop/uttower_right.JPG')
+img_ = cv2.imread('HW3/uttower_right.JPG')
 img1 = cv2.cvtColor(img_,cv2.COLOR_BGR2GRAY)
+
+img = cv2.imread('HW3/uttower_left.JPG')
+img2 = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 
 sift = cv2.xfeatures2d.SIFT_create()

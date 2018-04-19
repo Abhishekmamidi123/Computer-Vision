@@ -32,6 +32,11 @@ def intersection_point(A1, A2, B1, B2):
 	y_int_A = y_intercept(A1, slope_A)
 	y_int_B = y_intercept(B1, slope_B)
 	return line_intersect(slope_A, y_int_A, slope_B, y_int_B)
+	
+def find_equation(a, b):
+	m = slope(a, b)
+	c = y_intercept(a, m)
+	equation = 'y = ' + str(m) + '*x + ' + str(c)
 
 # Read image
 # image_path = 'HW3/img1.jpg'
@@ -39,8 +44,8 @@ image_path = 'img1.jpg'
 image = read_image(image_path)
 
 # Read points
-print 'Number of lines = 6'
-n_lines = 6
+print 'Number of lines = 9'
+n_lines = 9
 n_points = n_lines*2
 points = read_points(n_points)
 print points
@@ -48,7 +53,7 @@ print points
 # Find intersection points
 vanishing_points = []
 print range(len(points))
-for i in range(0, len(points), n_lines):
+for i in range(0, len(points), 6):
 	A1 = points[i]
 	A2 = points[i+1]
 	B1 = points[i+2]
@@ -68,12 +73,19 @@ print vanishing_points
 
 # Plot the vanishing points
 plt.plot([vanishing_points[0][0], vanishing_points[1][0]], [vanishing_points[0][1], vanishing_points[1][1]], marker = 'o')
+plt.annotate('('+str(round(vanishing_points[0][0],2))+', '+str(round(vanishing_points[0][1],2))+')', xy = (vanishing_points[0][0], vanishing_points[0][1]))
+plt.annotate('('+str(round(vanishing_points[1][0],2))+', '+str(round(vanishing_points[1][1],2))+')', xy = (vanishing_points[1][0], vanishing_points[1][1]))
+
+plt.plot([vanishing_points[1][0], vanishing_points[2][0]], [vanishing_points[1][1], vanishing_points[2][1]], marker = 'o')
+plt.annotate('('+str(round(vanishing_points[1][0],2))+', '+str(round(vanishing_points[0][1],2))+')', xy = (vanishing_points[1][0], vanishing_points[1][1]))
+plt.annotate('('+str(round(vanishing_points[2][0],2))+', '+str(round(vanishing_points[2][1],2))+')', xy = (vanishing_points[2][0], vanishing_points[2][1]))
+
+plt.plot([vanishing_points[2][0], vanishing_points[0][0]], [vanishing_points[2][1], vanishing_points[0][1]], marker = 'o')
+plt.annotate('('+str(round(vanishing_points[2][0],2))+', '+str(round(vanishing_points[2][1],2))+')', xy = (vanishing_points[2][0], vanishing_points[2][1]))
+plt.annotate('('+str(round(vanishing_points[0][0],2))+', '+str(round(vanishing_points[0][1],2))+')', xy = (vanishing_points[0][0], vanishing_points[0][1]))
 plt.show()
 
 # Find Equation
-m = slope(vanishing_points[0], vanishing_points[1])
-c = y_intercept(vanishing_points[0], m)
-print '\n'
-print 'Equation:'
-equation = 'y = ' + str(m) + '*x + ' + str(c)
-print equation
+equation_1 = find_equation(vanishing_points[0], vanishing_points[1])
+equation_2 = find_equation(vanishing_points[1], vanishing_points[2])
+equation_3 = find_equation(vanishing_points[2], vanishing_points[0])
