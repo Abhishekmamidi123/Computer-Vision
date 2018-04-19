@@ -51,7 +51,6 @@ for i in left_kp1:
 	temp.append(i.pt[1])
 	left_key_pts.append(temp)
 left_key_pts = np.array(left_key_pts)
-print type(left_key_pts)
 
 right_key_pts=[]
 for i in right_kp1:
@@ -60,58 +59,43 @@ for i in right_kp1:
 	temp.append(i.pt[1])
 	right_key_pts.append(temp)
 right_key_pts = np.array(right_key_pts)
-print type(right_key_pts)
+
+
 ###### Step 2 and 3: Compute distances between every descriptor in one image and every descriptor in the other image.
 # and Select putative matches based on the matrix of pairwise descriptor distances obtained above.
 f1=[]
 f2=[]
-r1_list=[]
-ratio_list=[]
-#desc_pair_list =[]
-#print type(right_des)
-print len(left_des)
-print len(right_des)
 count1=0
 count2=0
-for des1 in left_des:
+for i in range(len(left_des)):
 	count1+=1
-	#print "count1 "+str(count1)+"----------------------------"
+	#print "count1 "+str(count1)+"----------------------------"0
 	count2=0
 	dis_list = []
-	for des2 in right_des:
+	for j in range(len(right_des)):
 		count2+=1
 		#print "count2 "+str(count1)+"-"+str(count2)
-		dis = np.linalg.norm(des2-des1)
-		dis_list.append((dis,des2))
+		dis = np.linalg.norm(right_des[j]-left_des[i])
+		dis_list.append((dis,right_key_pts[j]))
 	dis_list.sort(key=lambda x: x[0])
-	#print dis_list
-	b1 = dis_list[0][0]
-	d1 = dis_list[0][1]
-	b2 = dis_list[1][0]
-	d2 = dis_list[1][1]
-	#print b1
-	#print b2
-	#ratio=round(b1/float(b2),4)
-	#print ratio
+	d1 = dis_list[0][0]
+	d2 = dis_list[1][0]
+	p1 = dis_list[0][1]
+	ratio=round(d1/float(d2),4)
 	print str(count1)+" -- "+str(count2)+" : "+str(ratio)
 	if ratio < 0.5:
 		print "===================="
-		'''if ratio not in r1_list:
-			r1_list.append(ratio)'''
-		f1.append(d1)
-		f2.append(d2)
-		#print f2
+		f2.append(right_key_pts[j])
+		f1.append(left_key_pts[i])
 		print "yes"
-		#desc_pair_list.append((des1,des2))
-	#ratio_list.append(ratio)
-
+		
 #######	Step 4: Run RANSAC to estimate a homography mapping one image onto the other.
 
-
+#src_pts = np.float32(f1).reshape(-1,1,2)
+#des_pts = np.float32(f2).reshape(-1,1,2)
 #f1,f2=np.float32((left_kp,right_kp))
-src_pts = np.float32([ left_key_pts[m.queryIdx].pt for m in f1 ]).reshape(-1,1,2)
-des_pts = np.float32([ right_key_pts[m.queryIdx].pt for m in f2 ]).reshape(-1,1,2)
-H, __ = cv2.findHomography(left_key_pts, right_key_pts, cv2.RANSAC, 4)
-#print H
+
+H, __ = cv2.findHomography( left_key_pts, right_key_pts,cv2.RANSAC, 4)
+print H
 	 
 print("--- %s seconds ---" % (time.time() - start_time))
