@@ -1,8 +1,7 @@
-import cv2
 import scipy.misc
 import numpy as np
 import matplotlib.pyplot as plt
-# from PIL import Image
+import warnings
 
 def read_image(path):
 	image = scipy.misc.imread(path)
@@ -35,27 +34,35 @@ def intersection_point(A1, A2, B1, B2):
 	return line_intersect(slope_A, y_int_A, slope_B, y_int_B)
 
 # Read image
-image_path = 'HW3/img1.jpg'
+# image_path = 'HW3/img1.jpg'
+image_path = 'img1.jpg'
 image = read_image(image_path)
 
 # Read points
-print 'Number of lines = 4'
-n_lines = 4
-n_points = 8
+print 'Number of lines = 6'
+n_lines = 6
+n_points = n_lines*2
 points = read_points(n_points)
 print points
 
 # Find intersection points
 vanishing_points = []
 print range(len(points))
-for i in range(0, len(points), 4):
+for i in range(0, len(points), n_lines):
 	A1 = points[i]
 	A2 = points[i+1]
 	B1 = points[i+2]
 	B2 = points[i+3]
+	C1 = points[i+4]
+	C2 = points[i+5]
 	plt.plot([A1[0], A2[0]], [A1[1], A2[1]], marker = 'o')
 	plt.plot([B1[0], B2[0]], [B1[1], B2[1]], marker = 'o')
-	p1, p2 = intersection_point(A1, A2, B1, B2)
+	plt.plot([C1[0], C2[0]], [C1[1], C2[1]], marker = 'o')
+	p11, p12 = intersection_point(A1, A2, B1, B2)
+	p21, p22 = intersection_point(B1, B2, C1, C2)
+	p31, p32 = intersection_point(C1, C2, A1, A2)
+	p1 = float(p11 + p21 + p31)/3.0
+	p2 = float(p12 + p22 + p32)/3.0
 	vanishing_points.append((p1, p2))
 print vanishing_points
 
