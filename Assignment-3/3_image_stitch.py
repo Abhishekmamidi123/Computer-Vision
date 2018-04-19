@@ -51,12 +51,16 @@ else:
     raise AssertionError("Can't find enough keypoints.")  	
    
 dst = cv2.warpPerspective(img_,H,(img.shape[1] + img_.shape[1], img.shape[0]))     	
-plt.subplot(122),plt.imshow(dst),plt.title('Output')
+plt.subplot(122),plt.imshow(dst),plt.title('Warped Image')
 plt.show()
 plt.figure()
 dst[0:img.shape[0], 0:img.shape[1]] = img
+cv2.imwrite('resultant_stitched_panorama.jpg',dst)
 plt.imshow(dst)
 plt.show()
+cv2.imwrite('resultant_stitched_panorama.jpg',dst)
+
+
 '''for i in range(1000):
 	pts = []
 	ind = []
