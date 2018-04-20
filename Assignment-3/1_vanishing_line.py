@@ -40,7 +40,7 @@ def find_equation(a, b):
 
 # Read image
 # image_path = 'HW3/img1.jpg'
-image_path = 'img1.jpg'
+image_path = 'HW3/img1.jpg'
 image = read_image(image_path)
 
 # Read points

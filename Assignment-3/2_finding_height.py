@@ -74,7 +74,7 @@ def plot_vanishing_line():
 
 # Read image
 # image_path = 'HW3/img1.jpg'
-image_path = 'img2.jpg'
+image_path = 'HW3/img2.jpg'
 image = read_image(image_path)
 
 # Pole points
@@ -113,6 +113,14 @@ height_object_point = intersection_point(A1, A2, B1, B2)
 
 object_height = 1.65
 height_of_object = object_height * (np.linalg.norm(np.array(height_object_point)-np.array(pole_bottom))*1.0/np.linalg.norm(np.array(pole_top)-np.array(pole_bottom)))
-
 print height_of_object
+
+# Height of camera
+A1 = pole_bottom
+A2 = pole_top
+B1 = vanishing_points[0]
+B2 = vanishing_points[1]
+point_on_vl = intersection_point(A1, A2, B1, B2)
+height_of_camera = object_height * (np.linalg.norm(np.array(point_on_vl)-np.array(pole_bottom))*1.0/np.linalg.norm(np.array(pole_top)-np.array(pole_bottom)))
+print height_of_camera
 plt.show()
